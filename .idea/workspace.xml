@@ -4,7 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="67a7343e-33d1-45aa-bf08-eec002924e04" name="Changes" comment="add database configuration and connect to db" />
+    <list default="true" id="67a7343e-33d1-45aa-bf08-eec002924e04" name="Changes" comment="add database configuration and connect to db">
+      <changelist_data name="George Cojocariu" email="georgecojocariu1@gmail.com" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
