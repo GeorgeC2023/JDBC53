@@ -1,14 +1,13 @@
 package org.example;
 
 import com.mysql.cj.jdbc.MysqlDataSource;
-import org.example.dao.AnimalDao;
-import org.example.dao.AnimalDaoImpl;
-import org.example.dao.FoodDao;
-import org.example.dao.FoodDaoImpl;
+import org.example.dao.*;
 import org.example.model.Animal;
+import org.example.model.Car;
 
 import javax.xml.crypto.Data;
 import java.sql.*;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -41,6 +40,7 @@ public class Main {
 
             AnimalDao animalDao = new AnimalDaoImpl(connection);
             FoodDao foodDao = new FoodDaoImpl(connection);
+            CarDao carDao = new CarDaoImpl(connection);
 
             // statement  - folosit pt comenzi de tranfer sql la baza de date
             Statement statement = connection.createStatement();
@@ -51,6 +51,16 @@ public class Main {
             animalDao.create(new Animal(null, "Suier", "dog2"));
             animalDao.create(new Animal(null, "Mitzi", "cat"));
 
+            carDao.createTable();
+            carDao.createCar(new Car(null, "Renault", Date.valueOf("2008-10-07")));
+            carDao.createCar(new Car(null, "Dacia", Date.valueOf("2009-11-08")));
+            carDao.createCar(new Car(null, "Opel", Date.valueOf("2018-12-12")));
+
+            carDao.updateCar(new Car(1, "Audi", Date.valueOf("2019-06-23")));
+
+
+            carDao.deleteCar(6);
+            LOGGER.info("Metoda de stergere a unui obiect");
 
             foodDao.createTable();
 
@@ -62,9 +72,16 @@ public class Main {
                     "primary key (id))");*/
 
             // putem sa refolosim obiectul statement pentru a trimite alte instructiuni sql catre baza de date
-           // statement.execute("Create table if not exists animals ( id integer not null auto_increment, name varchar(100), species varchar(100), primary key(id))");
+            // statement.execute("Create table if not exists animals ( id integer not null auto_increment, name varchar(100), species varchar(100), primary key(id))");
 
             LOGGER.info(("Tables create successful"));
+
+            List<Car> cars = carDao.readAllCars();
+            System.out.println("Masinile din baza de date sunt: ");
+            for (Car car : cars) {
+                System.out.println(car);
+            }
+            carDao.dropTable();
 
             // we can reuse statement object
             statement.execute("insert into animals (name, species) values (\"Lucky\", \"Dog\")");
@@ -72,7 +89,6 @@ public class Main {
             LOGGER.info(("Data insertion was successful"));
 
             statement.execute("Update Animals Set Name = \"Bubu\" where Id =2");
-
 
 
             PreparedStatement preparedStatement = connection.prepareStatement(
@@ -132,7 +148,6 @@ public class Main {
             //statement.execute("drop table food");
 
             foodDao.dropTable();
-
 
 
         } catch (SQLException sqlException) {

@@ -2,10 +2,9 @@ package org.example.dao;
 
 import org.example.model.Animal;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class AnimalDaoImpl implements AnimalDao {
     private final Connection connection;
@@ -26,7 +25,7 @@ public class AnimalDaoImpl implements AnimalDao {
 
     @Override
     public void create(Animal animal) throws SQLException {
-        PreparedStatement preparedStatement = connection.prepareStatement("insert into animal (name, species) values (?,?)");
+        PreparedStatement preparedStatement = connection.prepareStatement("insert into animals (name, species) values (?,?)");
         preparedStatement.setString(1, animal.getName());
         preparedStatement.setString(2, animal.getSpecies());
         preparedStatement.execute();
@@ -38,4 +37,23 @@ public class AnimalDaoImpl implements AnimalDao {
         Statement statement = connection.createStatement();
         statement.execute("drop table animals");
     }
+    @Override
+    public List<Animal> read() throws SQLException {
+        Statement statement = connection.createStatement();
+        ResultSet rs = statement.executeQuery("SELECT * FROM animals");
+
+        List<Animal> animals = new ArrayList<>();
+        while (rs.next() == true ) {
+            Animal animal = new Animal();
+            animal.setId(rs.getInt(1));
+            animal.setName(rs.getString(2));
+            animal.setSpecies(rs.getString(3));
+
+            animals.add(animal);
+        }
+
+        return animals;
+    }
+
+
 }

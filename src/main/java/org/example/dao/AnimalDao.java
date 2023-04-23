@@ -7,6 +7,7 @@ import org.example.model.Animal;
 
 import java.sql.SQLDataException;
 import java.sql.SQLException;
+import java.util.List;
 
 public interface AnimalDao {
 
@@ -14,12 +15,12 @@ public interface AnimalDao {
     void createTable() throws SQLException;
     void create(Animal animal) throws SQLException;
 
+    List<Animal> read() throws SQLException;
 
-    //adaugare date  operatiune numita CREATE animals
+    //adaugare date  -operatiune numita CREATE animals
     //gasire date                       READ animals
     //modificare date                   UPDATE animals
     //stergere date                     DELETE animals
-
     // sters tabel
     void dropTable() throws SQLException;
 }
