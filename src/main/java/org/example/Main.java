@@ -3,6 +3,8 @@ package org.example;
 import com.mysql.cj.jdbc.MysqlDataSource;
 import org.example.dao.AnimalDao;
 import org.example.dao.AnimalDaoImpl;
+import org.example.dao.FoodDao;
+import org.example.dao.FoodDaoImpl;
 
 import javax.xml.crypto.Data;
 import java.sql.*;
@@ -37,18 +39,20 @@ public class Main {
             LOGGER.log(Level.INFO, "The connection succeed");
 
             AnimalDao animalDao = new AnimalDaoImpl(connection);
+            FoodDao foodDao = new FoodDaoImpl(connection);
 
             // statement  - folosit pt comenzi de tranfer sql la baza de date
             Statement statement = connection.createStatement();
 
             animalDao.createTable();
+            foodDao.createTable();
 
-            statement.execute("Create table if not exists food(id integer auto_increment, " +
+           /* statement.execute("Create table if not exists food(id integer auto_increment, " +
                     "name varchar(100)," +
                     "description varchar(100)," +
                     "calories_per_100 integer," +
                     "expiration_date date," +
-                    "primary key (id))");
+                    "primary key (id))");*/
 
             // putem sa refolosim obiectul statement pentru a trimite alte instructiuni sql catre baza de date
            // statement.execute("Create table if not exists animals ( id integer not null auto_increment, name varchar(100), species varchar(100), primary key(id))");
@@ -117,6 +121,8 @@ public class Main {
             statement.execute("drop table animals");
             animalDao.dropTable();
             statement.execute("drop table food");
+            foodDao.dropTable();
+
 
 
         } catch (SQLException sqlException) {

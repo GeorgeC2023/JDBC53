@@ -6,12 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="67a7343e-33d1-45aa-bf08-eec002924e04" name="Changes" comment="add database configuration and connect to db">
       <changelist_data name="George Cojocariu" email="georgecojocariu1@gmail.com" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/dao/AnimalDao.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/dao/AnimalDaoImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/model/Animal.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/model/Animal.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -113,7 +107,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/org/example/Main.java</url>
-          <line>113</line>
+          <line>116</line>
           <option name="timeStamp" value="2" />
         </line-breakpoint>
       </breakpoints>
