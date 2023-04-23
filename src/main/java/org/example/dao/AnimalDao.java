@@ -3,6 +3,8 @@ package org.example.dao;
 // manipulare structura baza de date (creare si stergere tabel)
 // manipulare date CRUD
 
+import org.example.model.Animal;
+
 import java.sql.SQLDataException;
 import java.sql.SQLException;
 
@@ -10,6 +12,7 @@ public interface AnimalDao {
 
     // creat tabel
     void createTable() throws SQLException;
+    void create(Animal animal) throws SQLException;
 
 
     //adaugare date  operatiune numita CREATE animals

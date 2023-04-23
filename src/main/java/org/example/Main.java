@@ -118,9 +118,12 @@ public class Main {
             System.out.println(rs.next());*/
 
 
-            statement.execute("drop table animals");
+            //statement.execute("drop table animals");
+
             animalDao.dropTable();
-            statement.execute("drop table food");
+
+            //statement.execute("drop table food");
+
             foodDao.dropTable();
 
 
