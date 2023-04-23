@@ -1,8 +1,9 @@
 package org.example.model;
+
 //reprezentare a unei instante din tabelul animals;
 public class Animal {
 
-    private  Integer id; // nu folositi int pt a evita NullPointer exception
+    private Integer id; // nu folositi int pt a evita NullPointer exception
     private String name;
     private String species;
 

@@ -1,6 +1,8 @@
 package org.example;
 
 import com.mysql.cj.jdbc.MysqlDataSource;
+import org.example.dao.AnimalDao;
+import org.example.dao.AnimalDaoImpl;
 
 import javax.xml.crypto.Data;
 import java.sql.*;
@@ -34,17 +36,12 @@ public class Main {
             Connection connection = dataSource.getConnection();
             LOGGER.log(Level.INFO, "The connection succeed");
 
+            AnimalDao animalDao = new AnimalDaoImpl(connection);
+
             // statement  - folosit pt comenzi de tranfer sql la baza de date
             Statement statement = connection.createStatement();
-            statement.execute("Create table if not exists animals ( id integer not null auto_increment, name varchar(100), species varchar(100), primary key(id))");
-            LOGGER.info(("Create table animals was successful"));
 
-            // we can reuse statement object
-            statement.execute("insert into animals (name, species) values (\"Lucky\", \"Dog\")");
-            statement.execute("insert into animals (name, species) values (\"Lucky\", \"Dog\")");
-            LOGGER.info(("Data insertion was successful"));
-
-            statement.execute("Update Animals Set Name = \"Bubu\" where Id =2");
+            animalDao.createTable();
 
             statement.execute("Create table if not exists food(id integer auto_increment, " +
                     "name varchar(100)," +
@@ -53,6 +50,20 @@ public class Main {
                     "expiration_date date," +
                     "primary key (id))");
 
+            // putem sa refolosim obiectul statement pentru a trimite alte instructiuni sql catre baza de date
+           // statement.execute("Create table if not exists animals ( id integer not null auto_increment, name varchar(100), species varchar(100), primary key(id))");
+
+            LOGGER.info(("Tables create successful"));
+
+            // we can reuse statement object
+            statement.execute("insert into animals (name, species) values (\"Lucky\", \"Dog\")");
+            statement.execute("insert into animals (name, species) values (\"Lucky\", \"Dog\")");
+            LOGGER.info(("Data insertion was successful"));
+
+            statement.execute("Update Animals Set Name = \"Bubu\" where Id =2");
+
+
+
             PreparedStatement preparedStatement = connection.prepareStatement(
                     "insert into food (name, description, calories_per_100, expiration_date) values (?, ?, ?, ?)");
             preparedStatement.setString(1, "ciocolată");
@@ -60,8 +71,8 @@ public class Main {
             preparedStatement.setInt(3, 550);
             Date expirationDate = Date.valueOf("2024-10-12");
             preparedStatement.setDate(4, expirationDate);
-        // intotdeauna trebuie rulat.execute() daca vrem sa fie executat codul sql pe baza de date
-        // comanda care trimite instructiunile sql catre server ( instructiunile pregatite mai sus)
+            // intotdeauna trebuie rulat.execute() daca vrem sa fie executat codul sql pe baza de date
+            // comanda care trimite instructiunile sql catre server ( instructiunile pregatite mai sus)
             preparedStatement.execute();
 
             preparedStatement.setString(1, "Alune");
@@ -77,13 +88,13 @@ public class Main {
                 System.out.println("Species: "+ rs.getString(3));
             }*/
 
-            ResultSet rst = statement.executeQuery( "SELECT * FROM food order by calories_per_100 desc");
-            while(rst.next()== true){
-                System.out.println("Id: "+ rst.getInt(1));
-                System.out.println("Name: "+ rst.getString(2));
-                System.out.println("Description:"  + rst.getString(3));
-                System.out.println("Calories_per_100: "+ rst.getInt(4));
-                System.out.println("Expiration_date: "+ rst.getDate(5));
+            ResultSet rst = statement.executeQuery("SELECT * FROM food order by calories_per_100 desc");
+            while (rst.next() == true) {
+                System.out.println("Id: " + rst.getInt(1));
+                System.out.println("Name: " + rst.getString(2));
+                System.out.println("Description:" + rst.getString(3));
+                System.out.println("Calories_per_100: " + rst.getInt(4));
+                System.out.println("Expiration_date: " + rst.getDate(5));
 
             }
 
@@ -104,7 +115,9 @@ public class Main {
 
 
             statement.execute("drop table animals");
+            animalDao.dropTable();
             statement.execute("drop table food");
+
 
         } catch (SQLException sqlException) {
             //LOGGER.log(Level.SEVERE, "Error when connection to database " + dbName
