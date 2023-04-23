@@ -5,6 +5,7 @@ import org.example.dao.AnimalDao;
 import org.example.dao.AnimalDaoImpl;
 import org.example.dao.FoodDao;
 import org.example.dao.FoodDaoImpl;
+import org.example.model.Animal;
 
 import javax.xml.crypto.Data;
 import java.sql.*;
@@ -45,6 +46,12 @@ public class Main {
             Statement statement = connection.createStatement();
 
             animalDao.createTable();
+
+            animalDao.create(new Animal(null, "Lucky", "dog"));
+            animalDao.create(new Animal(null, "Suier", "dog2"));
+            animalDao.create(new Animal(null, "Mitzi", "cat"));
+
+
             foodDao.createTable();
 
            /* statement.execute("Create table if not exists food(id integer auto_increment, " +
